@@ -41,6 +41,29 @@ public class Esame {
 		//Quando creo un nuovo esame non è ancora stato superato
 		this.superato = false; 
 	}
+	/**
+	 * Se l'esame non è ancora superato, lo considera superato
+	 * con voto e data specificati.
+	 * Se invece fosse già superato, genera un'eccezione
+	 * 
+	 * @param voto
+	 * @param data
+	 */
+	public void supera(int voto, LocalDate data){
+		// Siccome questo metodo gestisce il superamento dell'esame,
+		// non faccio chiamare dall'esterno i metodi setSuperato,
+		// setVoto e setDataSuperamento => private
+		if(!this.superato){
+			//non ancora superato: OK
+			this.superato = true;
+			this.voto = voto;
+			this.dataSuperamento = data;
+		}else{
+			//Ho chiamato un metodo su un oggetto il cui stato interno 
+			//non permetteva di chiamarlo
+			throw new IllegalStateException("Esame "+this.codice+" già superato!"); 
+		}
+	}
 	
 	@Override
 	public int hashCode() {
@@ -94,19 +117,30 @@ public class Esame {
 	public boolean isSuperato() {
 		return superato;
 	}
-	public void setSuperato(boolean superato) {
+	private void setSuperato(boolean superato) {
 		this.superato = superato;
 	}
+	/**
+	 * Restituisce il voto solo se l'esame è stato superato
+	 * Altrimenti eccezione
+	 * @return
+	 */
 	public int getVoto() {
-		return voto;
+		if(this.superato)
+			return voto;
+		else
+			throw new IllegalStateException("Esame "+this.codice+" non ancora superato!");
 	}
-	public void setVoto(int voto) {
+	private void setVoto(int voto) {
 		this.voto = voto;
 	}
 	public LocalDate getDataSuperamento() {
-		return dataSuperamento;
+		if(this.superato)
+			return dataSuperamento;
+		else
+			throw new IllegalStateException("Esame "+this.codice+"non ancora superato!");
 	}
-	public void setDataSuperamento(LocalDate dataSuperamento) {
+	private void setDataSuperamento(LocalDate dataSuperamento) {
 		this.dataSuperamento = dataSuperamento;
 	}
 }
