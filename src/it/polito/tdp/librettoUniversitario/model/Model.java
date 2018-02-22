@@ -3,6 +3,8 @@ package it.polito.tdp.librettoUniversitario.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polito.tdp.librettoUniversitario.db.DAO_Esame;
+
 /**
  * 
  * @author LP
@@ -22,11 +24,15 @@ public class Model {
 	 * @return true se è stato inserito, false se esisteva già
 	 */
 	public boolean addEsame(Esame esame){
-		if(!esami.contains(esame)){
+		/*if(!esami.contains(esame)){
 			esami.add(esame);
 			return true;
 		}else
-			return false;
+			return false;*/
+		
+		// RIDEFINISCO USANDO DAO_Esame
+		DAO_Esame dao = new DAO_Esame();
+		return dao.create(esame);
 	}
 	/**
 	 * Ricerca se esiste un esame con il codice specificato.
@@ -40,10 +46,15 @@ public class Model {
 		// indexOf effettua una equals su due oggetti di tipo esame
 		// Creo un esame fittizio con solo il codice in modo da potere 
 		// verificare se esiste in esami un esame con quel codice
-		int position = esami.indexOf(new Esame(codice, "", ""));
+		/*int position = esami.indexOf(new Esame(codice, "", ""));
 		if(-1==position)
 			return null;
 		else
-			return esami.get(position);
+			return esami.get(position);*/
+		
+		// RIDEFINITO USANDO DAO_Esame
+		DAO_Esame dao = new DAO_Esame();
+		Esame e = dao.find(codice);
+		return e;
 	}
 }
