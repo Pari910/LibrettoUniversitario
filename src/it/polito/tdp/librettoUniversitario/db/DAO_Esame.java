@@ -1,7 +1,6 @@
 package it.polito.tdp.librettoUniversitario.db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import it.polito.tdp.librettoUniversitario.model.Esame;
 public class DAO_Esame {
 
 	public Esame find(String codice){
-		String jdbcURL = "jdbc:mysql://localhost/libretto?user=root";
 		String query = ""
 				+ "SELECT CODICE, TITOLO, DOCENTE, SUPERATO, VOTO, DATA_SUPERAMENTO "
 				+ "FROM ESAME "
@@ -19,7 +17,7 @@ public class DAO_Esame {
 		Esame esame = null;
 		
 		try {
-			Connection conn = DriverManager.getConnection(jdbcURL);
+			Connection conn = DB_Connect.getInstance().getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, codice);
@@ -38,13 +36,12 @@ public class DAO_Esame {
 	}
 	
 	public boolean create(Esame e){
-		String jdbcURL = "jdbc:mysql://localhost/libretto?user=root";
 		String insert = ""
 				+ "INSERT INTO ESAME (CODICE, TITOLO, DOCENTE) "
 				+ "VALUES ( ?, ? , ?) ";
 		
 		try {
-			Connection conn = DriverManager.getConnection(jdbcURL);
+			Connection conn = DB_Connect.getInstance().getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(insert);
 			ps.setString(1, e.getCodice());
