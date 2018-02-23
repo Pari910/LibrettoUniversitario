@@ -1,6 +1,6 @@
-package it.polito.tdp.librettoUniversitario.constants;
+package it.polito.tdp.librettoUniversitario.db;
 
-public class Constants_DB {
+public class DB_Constants {
 
 	public static final String jdbcUrl = "jdbc:mysql://localhost/libretto?user=root";
 

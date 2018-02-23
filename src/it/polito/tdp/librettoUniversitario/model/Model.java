@@ -3,7 +3,7 @@ package it.polito.tdp.librettoUniversitario.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polito.tdp.librettoUniversitario.db.DAO_Esame;
+import it.polito.tdp.librettoUniversitario.dao.DAO_Esame;
 
 /**
  * 

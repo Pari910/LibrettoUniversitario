@@ -1,4 +1,4 @@
-package it.polito.tdp.librettoUniversitario.db;
+package it.polito.tdp.librettoUniversitario.dao;
 
 import it.polito.tdp.librettoUniversitario.model.Esame;
 

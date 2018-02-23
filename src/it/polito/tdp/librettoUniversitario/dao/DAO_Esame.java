@@ -1,25 +1,24 @@
-package it.polito.tdp.librettoUniversitario.db;
+package it.polito.tdp.librettoUniversitario.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import it.polito.tdp.librettoUniversitario.db.DB_Manager;
 import it.polito.tdp.librettoUniversitario.model.Esame;
+import it.polito.tdp.librettoUniversitario.sql.QUERY_Esame;
 
 public class DAO_Esame {
 
 	public Esame find(String codice){
-		String query = ""
-				+ "SELECT CODICE, TITOLO, DOCENTE, SUPERATO, VOTO, DATA_SUPERAMENTO "
-				+ "FROM ESAME "
-				+ "WHERE CODICE = ? ";
+		
 		Esame esame = null;
 		
 		try {
-			Connection conn = DB_Connect.getInstance().getConnection();
+			Connection conn = DB_Manager.getInstance().getConnection();
 			
-			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement ps = conn.prepareStatement(QUERY_Esame.SELECT_BY_CODICE);
 			ps.setString(1, codice);
 			
 			ResultSet rs = ps.executeQuery();
@@ -36,14 +35,11 @@ public class DAO_Esame {
 	}
 	
 	public boolean create(Esame e){
-		String insert = ""
-				+ "INSERT INTO ESAME (CODICE, TITOLO, DOCENTE) "
-				+ "VALUES ( ?, ? , ?) ";
-		
-		try {
-			Connection conn = DB_Connect.getInstance().getConnection();
 			
-			PreparedStatement ps = conn.prepareStatement(insert);
+		try {
+			Connection conn = DB_Manager.getInstance().getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(QUERY_Esame.INSERT_ESAME);
 			ps.setString(1, e.getCodice());
 			ps.setString(2, e.getTitolo());
 			ps.setString(3, e.getDocente());
